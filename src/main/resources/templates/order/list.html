@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/common :: head('Orders | Beverage Shop')}">
+</head>
+<body>
+    <div th:replace="~{fragments/common :: navbar}"></div>
+    <div th:replace="~{fragments/common :: messages}"></div>
+
+    <div class="container mt-4">
+        <h2>Order History</h2>
+        
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Items</th>
+                    <th>Total Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="order : ${orders}">
+                    <td th:text="${order.id}"></td>
+                    <td>
+                        <ul class="list-unstyled">
+                            <li th:each="item : ${order.orderItems}">
+                                <span th:text="${item.quantity + 'x ' + item.productName + ' (' + item.productType + ')'}"></span>
+                                - €<span th:text="${#numbers.formatDecimal(item.price, 1, 2)}"></span>
+                            </li>
+                        </ul>
+                    </td>
+                    <td>€<span th:text="${#numbers.formatDecimal(order.price, 1, 2)}"></span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

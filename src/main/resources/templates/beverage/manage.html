@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/common :: head('Manage | Beverage Management')"></th:block>
+    <link rel="stylesheet" th:href="@{/css/manage.css}">
+</head>
+<body>
+    <div th:replace="fragments/common :: navbar"></div>
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Beverage Management</h1>
+            <div class="d-flex add-buttons">
+            <a href="/manage/bottle/add" class="btn btn-primary me-2">
+                <i class="bi bi-plus-circle"></i> Add Bottle
+            </a>
+            <a href="/manage/crate/add" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Add Crate
+            </a>
+            </div>
+        </div>
+
+        <div th:replace="fragments/common :: messages"></div>
+
+        <!-- Bottles Section -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2 class="h5 mb-0">Bottle Inventory</h2>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Volume (L)</th>
+                                <th>Alcohol %</th>
+                                <th>Price</th>
+                                <th>Stock</th>
+                                <th>Supplier</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="bottle : ${bottles}">
+                                <td class="table-image-cell">
+                                    <img th:if="${bottle.pic}" th:src="${bottle.pic}" alt="Bottle image" class="img-thumbnail fixed-image">
+                                    <span th:unless="${bottle.pic}" class="bi bi-image text-muted"></span>
+                                </td>
+                                <td th:text="${bottle.name}"></td>
+                                <td th:text="${bottle.volume}"></td>
+                                <td th:text="${bottle.volumePercent} + '%'"></td>
+                                <td th:text="${'€' + #numbers.formatDecimal(bottle.price, 1, 2)}"></td>
+                                <td>
+                                    <span th:text="${bottle.inStock}"
+                                          th:class="${bottle.inStock < 10 ? 'stock-warning' : 'stock-ok'}">
+                                    </span>
+                                </td>
+                                <td th:text="${bottle.supplier}"></td>
+                                <td class="action-buttons">
+                                    <a th:href="@{/manage/bottle/{id}/update(id=${bottle.id})}" 
+                                       class="btn btn-sm btn-outline-primary me-1">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <form th:action="@{/manage/bottle/{id}/delete(id=${bottle.id})}" 
+                                          method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger"
+                                                onclick="return confirm('Are you sure you want to delete this bottle?')">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(bottles)}">
+                                <td colspan="8" class="text-center">No bottles available</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Crates Section -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="h5 mb-0">Crate Inventory</h2>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Bottles</th>
+                                <th>Price</th>
+                                <th>Stock</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="crate : ${crates}">
+                                <td class="table-image-cell">
+                                    <img th:if="${crate.pic}" th:src="${crate.pic}" alt="Crate image" class="img-thumbnail fixed-image">
+                                    <span th:unless="${crate.pic}" class="bi bi-image text-muted"></span>
+                                </td>
+                                <td th:text="${crate.name}"></td>
+                                <td th:text="${crate.noOfBottles}"></td>
+                                <td th:text="${'€' + #numbers.formatDecimal(crate.price, 1, 2)}"></td>
+                                <td>
+                                    <span th:text="${crate.inStock}"
+                                          th:class="${crate.inStock < 10 ? 'stock-warning' : 'stock-ok'}">
+                                    </span>
+                                </td>
+                                <td class="action-buttons">
+                                    <a th:href="@{/manage/crate/{id}/update(id=${crate.id})}" 
+                                       class="btn btn-sm btn-outline-primary me-1">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <form th:action="@{/manage/crate/{id}/delete(id=${crate.id})}" 
+                                          method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger"
+                                                onclick="return confirm('Are you sure you want to delete this crate?')">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(crates)}">
+                                <td colspan="6" class="text-center">No crates available</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="fragments/common :: scripts"></div>
+</body>
+</html>

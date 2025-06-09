@@ -1,0 +1,22 @@
+.fixed-image {
+    width: 150px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.table-image-cell {
+    vertical-align: middle !important;
+    text-align: center;
+}
+
+.error { color: red; font-size: 0.9em; }
+.success-message { color: green; margin-bottom: 20px; }
+.nav-tabs .nav-link { color: #495057; }
+.nav-tabs .nav-link.active { font-weight: bold; }
+.tab-content {
+    padding: 20px;
+    border-left: 1px solid #dee2e6;
+    border-right: 1px solid #dee2e6;
+    border-bottom: 1px solid #dee2e6;
+    border-radius: 0 0 0.25rem 0.25rem;
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/common :: head('Home | Beverage Shop')">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+<body>
+  <div th:replace="fragments/common :: navbar"></div>
+  <div th:replace="fragments/common :: messages"></div>
+<!-- Main Content -->
+<div class="container mt-4">
+  <h1 class="text-center mb-4">Welcome to Beverage Shop</h1>
+  <p class="text-center">Explore our wide range of bottles and crates. Add your favorite beverages to your basket and place your order!</p>
+
+<!--  For error message -->
+  <div th:if="${errorMessage}">
+    <p style="color: red;" th:text="${errorMessage}"></p>
+  </div>
+
+  <!-- Bottles Section -->
+  <div class="mt-5">
+    <h2>Bottles</h2>
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+      <div class="col" th:each="bottle : ${bottles}">
+        <div class="card h-100">
+          <img th:src="${bottle.pic}" class="card-img-top" alt="Bottle Image" style="height: 200px; object-fit: cover;">
+          <div class="card-body">
+            <h5 class="card-title" th:text="${bottle.name}"></h5>
+            <p class="card-text">Volume: <span th:text="${bottle.volume}"></span> L</p>
+            <p class="card-text">Price: $<span th:text="${bottle.price}"></span></p>
+            <p class="card-text">In Stock: <span th:text="${bottle.inStock}"></span></p>
+            <form th:action="@{/cart/add/{id}(id=${bottle.id}, type='bottle')}" 
+                  method="post" class="d-inline">
+                <button type="submit" class="btn btn-primary btn-sm" th:disabled="${bottle.inStock == 0}">
+                  Add to Basket
+                </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Crates Section -->
+  <div class="mt-5">
+    <h2>Crates</h2>
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+      <div class="col" th:each="crate : ${crates}">
+        <div class="card h-100">
+          <img th:src="${crate.pic}" class="card-img-top" alt="Crate Image" style="height: 200px; object-fit: cover;">
+          <div class="card-body">
+            <h5 class="card-title" th:text="${crate.name}"></h5>
+            <p class="card-text">Bottles: <span th:text="${crate.noOfBottles}"></span></p>
+            <p class="card-text">Price: $<span th:text="${crate.price}"></span></p>
+            <p class="card-text">In Stock: <span th:text="${crate.inStock}"></span></p>
+            <form th:action="@{/cart/add/{id}(id=${crate.id}, type='crate')}" 
+                  method="post" class="d-inline">
+                <button type="submit" class="btn btn-primary btn-sm" th:disabled="${crate.inStock == 0}">
+                  Add to Basket
+                </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-3 mt-5">
+  <p>&copy; 2024 Beverage Shop. All Rights Reserved.</p>
+</footer>
+
+<div th:replace="fragments/common :: scripts"></div>
+</body>
+</html>

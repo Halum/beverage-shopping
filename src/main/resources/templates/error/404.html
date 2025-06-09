@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/common :: head('Page Not Found - Beverage Shop')}"></head>
+<body>
+    <nav th:replace="~{fragments/common :: navbar}"></nav>
+
+    <div class="container text-center py-5 bg-custom">
+        <style>
+            .beer-mug {
+                font-size: 100px;
+                animation: tilt 2s infinite;
+                display: inline-block;
+                transform-origin: bottom center;
+            }
+            
+            @keyframes tilt {
+                0% { transform: rotate(0deg); }
+                25% { transform: rotate(-10deg); }
+                75% { transform: rotate(10deg); }
+                100% { transform: rotate(0deg); }
+            }
+            
+            .spill {
+                position: relative;
+                height: 100px;
+                overflow: hidden;
+            }
+            
+            .spill::after {
+                content: "404";
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                font-size: 72px;
+                background: linear-gradient(45deg, #f6d365 0%, #fda085 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                font-weight: bold;
+            }
+            
+            .custom-shadow {
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            }
+            
+            .bubbles {
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+                overflow: hidden;
+            }
+            
+            .bubble {
+                position: absolute;
+                bottom: -20px;
+                background: rgba(33, 37, 41, 0.1);
+                border-radius: 50%;
+                animation: float 4s infinite;
+            }
+            
+            @keyframes float {
+                0% { transform: translateY(0); opacity: 0; }
+                50% { opacity: 0.6; }
+                100% { transform: translateY(-100vh); opacity: 0; }
+            }
+            
+            .bg-custom {
+                background: linear-gradient(135deg, #f5f7fa 0%, #e4e7eb 100%);
+                min-height: 100vh;
+            }
+        </style>
+
+        <div class="bubbles" id="bubbles"></div>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="beer-mug">🍺</div>
+                <div class="spill mb-4"></div>
+                <h2 class="display-4 mb-4 custom-shadow">Oops! Wrong Tap!</h2>
+                <p class="lead mb-4">
+                    Looks like this drink isn't on our menu! 
+                    <br>
+                    Why not head back to our main selection?
+                </p>
+                <a href="/" class="btn btn-warning btn-lg px-4 shadow">
+                    Back to Our Menu
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/common :: scripts}"></div>
+    
+    <script>
+        function createBubbles() {
+            const bubblesContainer = document.getElementById('bubbles');
+            const bubbleCount = 20;
+            
+            for (let i = 0; i < bubbleCount; i++) {
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble';
+                
+                const size = Math.random() * 20 + 10;
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.left = `${Math.random() * 100}%`;
+                bubble.style.animationDuration = `${4 + Math.random() * 4}s`;
+                bubble.style.animationDelay = `${Math.random() * 2}s`;
+                
+                bubblesContainer.appendChild(bubble);
+            }
+        }
+        
+        createBubbles();
+    </script>
+</body>
+</html>

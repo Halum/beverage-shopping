@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/common :: head(${crate.id == null ? 'Add New Crate' : 'Edit Crate'})">
+</head>
+<body>
+    <div th:replace="fragments/common :: navbar"></div>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h2 class="h4 mb-0" th:text="${crate.id == null ? 'Add New Crate' : 'Edit Crate'}">Crate Form</h2>
+                        <div th:replace="fragments/common :: back-button"></div>
+                    </div>
+                    <div class="card-body">
+                        <div th:replace="fragments/common :: messages"></div>
+
+                        <form th:action="@{/manage/crate/save}" th:object="${crate}" method="post">
+                            <input type="hidden" th:field="*{id}" />
+                            
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="name" th:field="*{name}" required>
+                                <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="noOfBottles" class="form-label">Number of Bottles</label>
+                                <input type="number" class="form-control" id="noOfBottles" th:field="*{noOfBottles}" required>
+                                <span class="error" th:if="${#fields.hasErrors('noOfBottles')}" th:errors="*{noOfBottles}"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="price" class="form-label">Price (€)</label>
+                                <input type="number" class="form-control" id="price" th:field="*{price}" step="0.01" required>
+                                <span class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="inStock" class="form-label">Stock</label>
+                                <input type="number" class="form-control" id="inStock" th:field="*{inStock}" required>
+                                <span class="error" th:if="${#fields.hasErrors('inStock')}" th:errors="*{inStock}"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="pic" class="form-label">Image Filename</label>
+                                <input type="text" class="form-control" id="pic" th:field="*{pic}">
+                                <span class="error" th:if="${#fields.hasErrors('pic')}" th:errors="*{pic}"></span>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-save"></i> Save Crate
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="fragments/common :: scripts"></div>
+</body>
+</html>

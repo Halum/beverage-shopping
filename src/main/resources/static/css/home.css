@@ -1,0 +1,47 @@
+.card {
+    transition: transform 0.2s;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.price {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #28a745;
+}
+
+.stock-info {
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+.low-stock {
+    color: #dc3545;
+}
+
+.add-to-cart-btn {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.section-title {
+    margin: 2rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.beverage-details {
+    margin-top: 0.5rem;
+}
+
+.beverage-details p {
+    margin-bottom: 0.25rem;
+}

@@ -1,0 +1,47 @@
+.add-buttons {
+    gap: 1rem;
+}
+
+.table-image-cell {
+    width: 100px;
+}
+
+.fixed-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}
+
+.action-buttons {
+    white-space: nowrap;
+}
+
+.stock-warning {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.stock-ok {
+    color: #28a745;
+}
+
+.card {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.card-header {
+    background-color: #f8f9fa;
+}
+
+.table-responsive {
+    margin: 0;
+}
+
+.table th {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.table td {
+    vertical-align: middle;
+}
